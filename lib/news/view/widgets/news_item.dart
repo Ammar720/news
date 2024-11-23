@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:news/models/news_response/article.dart';
-import 'package:news/widgets/loading_indicator.dart';
+import 'package:news/news/data/models/article.dart';
+import 'package:news/shared/widgets/loading_indicator.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class NewsItem extends StatelessWidget {
