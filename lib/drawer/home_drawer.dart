@@ -35,7 +35,7 @@ class HomeDrawer extends StatelessWidget {
               child: Column(
                 children: [
                   GestureDetector(
-                    onTap: () => (onItemSelected (DrawerItem.categories)),
+                    onTap: () => (onItemSelected(DrawerItem.categories)),
                     child: Row(
                       children: [
                         const Icon(Icons.menu),
@@ -51,7 +51,7 @@ class HomeDrawer extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   GestureDetector(
-                    onTap: () => (onItemSelected (DrawerItem.settings)),
+                    onTap: () => (onItemSelected(DrawerItem.settings)),
                     child: Row(
                       children: [
                         const Icon(Icons.settings),
@@ -75,7 +75,4 @@ class HomeDrawer extends StatelessWidget {
   }
 }
 
-enum DrawerItem{
-  categories,
-  settings
-}
+enum DrawerItem { categories, settings }

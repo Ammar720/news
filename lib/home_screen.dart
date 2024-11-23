@@ -29,11 +29,11 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-           selectedCategory != null
-            ?  selectedCategory!.label
-            : selectedDrawerItem == DrawerItem.categories
-                ?'News App'
-                : 'Settings',
+            selectedCategory != null
+                ? selectedCategory!.label
+                : selectedDrawerItem == DrawerItem.categories
+                    ? 'News App'
+                    : 'Settings',
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
@@ -41,7 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
           onItemSelected: onDrawerItemSelected,
         ),
         body: selectedCategory != null
-            ?  CategoryDetails(categoryId: selectedCategory!.id,)
+            ? CategoryDetails(
+                categoryId: selectedCategory!.id,
+              )
             : selectedDrawerItem == DrawerItem.categories
                 ? CategoriesGrid(selectedCategoryModel: onCategorySelected)
                 : const SettingsTab(),

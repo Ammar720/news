@@ -1,21 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:news/models/news_response/article.dart';
 import 'package:news/widgets/loading_indicator.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class NewsItem extends StatefulWidget {
-  const NewsItem({super.key});
+class NewsItem extends StatelessWidget {
+  final Article article;
 
-  @override
-  State<NewsItem> createState() => _NewsItemState();
-}
+  const NewsItem({super.key, required this.article});
 
-class _NewsItemState extends State<NewsItem> {
-      final fifteenAgo = DateTime.now().subtract(const Duration(minutes: 15));
 
   @override
   Widget build(BuildContext context) {
-    
     return Container(
       padding: const EdgeInsets.all(12),
       child: Column(
@@ -24,29 +20,31 @@ class _NewsItemState extends State<NewsItem> {
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: CachedNetworkImage(
-              imageUrl: 'https://th.bing.com/th/id/OIP.nKHjaZVhPgLKjjntUMpmXwHaHa?rs=1&pid=ImgDetMain' ,
-             
+              imageUrl: article.urlToImage ??
+                  'https://th.bing.com/th/id/OIP.nKHjaZVhPgLKjjntUMpmXwHaHa?rs=1&pid=ImgDetMain',
               height: MediaQuery.of(context).size.height * 0.25,
               width: double.infinity,
               fit: BoxFit.cover,
               placeholder: (context, url) => const LoadingIndicator(),
-               errorWidget: (context, url, error) => const Icon(Icons.error),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),
           const SizedBox(height: 5),
           Text(
-           'BBC News',
+            article.source?.name ?? '',
             style: Theme.of(context).textTheme.bodySmall,
           ),
           Text(
-             'why are footballs club ....',
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 14),
+             article.title ?? '',
+            style:
+                Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 14),
           ),
           Align(
             alignment: AlignmentDirectional.bottomEnd,
             child: Text(
-           timeago.format(fifteenAgo),
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 13),
+              timeago.format(article.publishedAt!),
+              style:
+                  Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 13),
             ),
           ),
         ],
