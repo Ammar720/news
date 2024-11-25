@@ -31,12 +31,15 @@ class CategoryItem extends StatelessWidget {
         children: [
           Image.asset(
             'assets/images/${category.imageName}.png',
-            height: MediaQuery.of(context).size.height * 0.12,
+            height: MediaQuery.of(context).size.height * 0.11,
           ),
           const Spacer(),
           Text(
             category.label,
-            style: Theme.of(context).textTheme.titleMedium,
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(fontSize: MediaQuery.of(context).size.width * 0.05),
           ),
         ],
       ),

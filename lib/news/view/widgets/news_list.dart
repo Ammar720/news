@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news/news/view/screens/news_details.dart';
 import 'package:news/news/view/widgets/news_item.dart';
 import 'package:news/news/view_model/news_view_model.dart';
 import 'package:provider/provider.dart';
@@ -33,8 +34,14 @@ class _NewsListState extends State<NewsList> {
             return ErrorIndicator(errorMessage: viewModel.errorMessage!);
           } else {
             return ListView.builder(
-              itemBuilder: (context, index) => NewsItem(
-                article: viewModel.news[index],
+              itemBuilder: (context, index) => GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, NewsDetails.routeName,
+                      arguments: viewModel.news[index]);
+                },
+                child: NewsItem(
+                  article: viewModel.news[index],
+                ),
               ),
               itemCount: viewModel.news.length,
             );
