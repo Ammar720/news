@@ -19,6 +19,21 @@ class NewsList extends StatefulWidget {
 
 class _NewsListState extends State<NewsList> {
   final viewModel = NewsViewModel();
+  final ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    viewModel.getNews(widget.sourceId);
+
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+              scrollController.position.maxScrollExtent &&
+          viewModel.hasMore) {
+        viewModel.getNews(widget.sourceId, isPagination: true);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,26 +43,37 @@ class _NewsListState extends State<NewsList> {
       create: (_) => viewModel,
       child: Consumer<NewsViewModel>(
         builder: (_, viewModel, __) {
-          if (viewModel.isLoading) {
+          if (viewModel.isLoading && viewModel.news.isEmpty) {
             return const LoadingIndicator();
           } else if (viewModel.errorMessage != null) {
             return ErrorIndicator(errorMessage: viewModel.errorMessage!);
           } else {
             return ListView.builder(
-              itemBuilder: (context, index) => GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, NewsDetails.routeName,
-                      arguments: viewModel.news[index]);
-                },
-                child: NewsItem(
-                  article: viewModel.news[index],
-                ),
-              ),
-              itemCount: viewModel.news.length,
-            );
+                controller: scrollController,
+                itemCount: viewModel.news.length + (viewModel.hasMore ? 1 : 0),
+                itemBuilder: (context, index) {
+                  if (index == viewModel.news.length) {
+                    return const LoadingIndicator();
+                  }
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, NewsDetails.routeName,
+                          arguments: viewModel.news[index]);
+                    },
+                    child: NewsItem(
+                      article: viewModel.news[index],
+                    ),
+                  );
+                });
           }
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 }

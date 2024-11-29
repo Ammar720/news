@@ -5,7 +5,7 @@ class NewsRepository {
   final NewsDataSource dataSource;
   NewsRepository(this.dataSource);
 
-  Future<List<Article>> getNews(String sourceId) async {
-    return dataSource.getNews(sourceId);
+  Future<List<Article>> getNews(String sourceId, {int page = 1}) async {
+    return dataSource.getNews(sourceId, page: page);
   }
 }

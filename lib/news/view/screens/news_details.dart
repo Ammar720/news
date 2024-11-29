@@ -21,6 +21,7 @@ class NewsDetails extends StatelessWidget {
         ),
       ),
       child: Scaffold(
+        backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: Text(
             article.title!,

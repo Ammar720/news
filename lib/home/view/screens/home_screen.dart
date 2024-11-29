@@ -3,6 +3,7 @@ import 'package:news/categories/view/widgets/categories_grid.dart';
 import 'package:news/categories/view/widgets/category_details.dart';
 import 'package:news/home/view/widgets/home_drawer.dart';
 import 'package:news/categories/data/models/category_model.dart';
+import 'package:news/shared/custom_search_delegat.dart';
 import 'package:news/settings/view/widgets/settings_tab.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,7 +28,21 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       child: Scaffold(
+        backgroundColor: Colors.transparent,
         appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  delegate: CustomSearchDelegate(),
+                );
+              },
+              icon: const Icon(
+                Icons.search,
+              ),
+            )
+          ],
           title: Text(
             selectedCategory != null
                 ? selectedCategory!.label
